@@ -638,7 +638,7 @@
   // brand (icon + words) is also scaled to the width of the list column below it.
   function fitBrand() {
     var top = document.querySelector('.brand-top'), bottom = document.querySelector('.brand-bottom');
-    var icon = document.querySelector('.brand-icon'), text = document.querySelector('.brand-text');
+    var icon = document.querySelector('.brand-badge'), text = document.querySelector('.brand-text');
     var results = $('results');
     if (!top || !bottom || !icon || !text) return;
     function matchTop() {
@@ -651,7 +651,7 @@
     if (!wide.matches || !results) return;
     var cs = getComputedStyle(results);
     var target = results.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-    var gap = parseFloat(getComputedStyle(icon).marginRight) + parseFloat(getComputedStyle(icon.parentNode).columnGap || 0);
+    var gap = parseFloat(getComputedStyle(icon.parentNode).columnGap) || 0;
     // Icon height follows the text height, which follows the font size, so settle it in a few passes.
     for (var i = 0; i < 4; i++) {
       var size = parseFloat(getComputedStyle(bottom).fontSize);
@@ -660,7 +660,7 @@
       matchTop();
       var h = text.getBoundingClientRect().height;
       icon.style.height = h.toFixed(1) + 'px';
-      icon.style.width = (h * 1000 / 1255).toFixed(1) + 'px';
+      icon.style.width = h.toFixed(1) + 'px'; // the box is square
     }
     // The header height may have changed, so let the map fill its new space.
     if (map) map.resize();
@@ -676,7 +676,7 @@
     window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitBrand, 100); });
     wire();
     initMap();
-    fetch('assets/places.json?v=2026-11-17c').then(function (r) {
+    fetch('assets/places.json?v=2026-11-17d').then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     }).then(function (data) {
