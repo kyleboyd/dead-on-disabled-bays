@@ -79,8 +79,8 @@ a { color: var(--link); font-weight: 600; text-decoration-thickness: 2px; text-u
 .brand { display: flex; align-items: center; gap: var(--s3); margin: 0; color: #F0F039; letter-spacing: 0; }
 /* Icon in a blue box. app.js makes the box as tall as the two lines of text on wide screens. */
 .brand-badge { flex: none; display: grid; place-items: center; width: 44px; height: 44px; background: #1B5BBC; border-radius: 5px; }
-/* Dashed outline icon, drawn from brand/disabled-icon.png. Dashes are sized to stay readable at header size. */
-.brand-icon { display: block; width: 50%; height: 62%; fill: none; stroke: #F0F039; stroke-width: 44; stroke-dasharray: 80 56; stroke-linecap: round; stroke-linejoin: round; }
+/* Solid outline wheelchair icon (brand/disabled-icon.svg), with a heavier line so it reads at header size. */
+.brand-icon { display: block; width: 50%; height: 62%; fill: none; stroke: #F0F039; stroke-width: 40; stroke-linecap: round; stroke-linejoin: round; }
 .brand-text { display: block; }
 /* Roc Grotesk Extra Wide: Black over Light. app.js sizes "DEAD ON" so both lines are the same width. */
 .brand-top, .brand-bottom { display: block; width: max-content; font-family: "roc-grotesk-extrawide", "roc-grotesk-wide", var(--font); white-space: nowrap; }
