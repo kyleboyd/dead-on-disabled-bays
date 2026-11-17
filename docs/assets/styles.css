@@ -110,13 +110,13 @@ dialog.info-panel::backdrop { background: rgba(9, 55, 115, .5); }
   border: 0; border-radius: 10px; background: rgba(9, 55, 115, .85); color: var(--white); cursor: pointer;
 }
 .info-close:hover { background: var(--navy); }
-/* Belfast photo with the dashed bay icon laid over its bottom-right corner at 45 degrees. */
+/* Belfast photo with the brand wheelchair icon small in its bottom-right corner. */
 .info-photo { margin: 0; }
 .info-photo-frame { position: relative; overflow: hidden; }
 .info-photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
 .info-photo-icon {
-  position: absolute; right: -2%; bottom: -6%; width: 38%; height: auto; aspect-ratio: 1;
-  transform: rotate(45deg); filter: drop-shadow(0 2px 4px rgba(9, 55, 115, .6));
+  position: absolute; right: var(--s3); bottom: var(--s3); width: 40px; height: 50px;
+  filter: drop-shadow(0 1px 3px rgba(9, 55, 115, .8));
 }
 .info-photo figcaption { padding: var(--s2) var(--s6) 0; font-size: 14px; line-height: 20px; color: #DCE6F3; }
 .info-photo figcaption a { color: inherit; }
