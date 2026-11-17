@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="https://use.typekit.net/gbz5wqn.css"><!-- Roc Grotesk, Adobe Fonts web project -->
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
   <!-- Bump ?v= on every release so browsers fetch the new files instead of cached ones. -->
-  <link rel="stylesheet" href="assets/tokens.css?v=2026-11-17x">
-  <link rel="stylesheet" href="assets/styles.css?v=2026-11-17x">
+  <link rel="stylesheet" href="assets/tokens.css?v=2026-11-17y">
+  <link rel="stylesheet" href="assets/styles.css?v=2026-11-17y">
 </head>
 <body>
   <a class="skip-link" href="#results">Skip to the list of bays</a>
@@ -39,12 +39,15 @@
           <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.6" fill="currentColor"/><circle cx="4.5" cy="12" r="1.6" fill="currentColor"/><circle cx="4.5" cy="18" r="1.6" fill="currentColor"/></svg>
           <span>Key</span>
         </button>
-        <ul class="key-list" id="key-list" aria-label="Map key">
-          <li><span class="ico" data-ico="good"></span> On-street bay</li>
-          <li><span class="ico" data-ico="approx"></span> Approx. position</li>
-          <li><span class="ico" data-ico="council"></span> Council car park</li>
-          <li><span class="ico" data-ico="hospital"></span> Hospital</li>
-        </ul>
+        <div class="key-list" id="key-list" role="group" aria-labelledby="key-title">
+          <h3 class="key-title" id="key-title">Map key</h3>
+          <ul class="key-items">
+            <li><span class="ico" data-ico="good"></span> On-street bay</li>
+            <li><span class="ico" data-ico="approx"></span> Approx. position</li>
+            <li><span class="ico" data-ico="council"></span> Council car park</li>
+            <li><span class="ico" data-ico="hospital"></span> Hospital</li>
+          </ul>
+        </div>
       </div>
       <div class="map-overlay">
       <form id="search-form" class="search-form" role="search" novalidate>
@@ -184,6 +187,6 @@
   </dialog>
 
   <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
-  <script src="assets/app.js?v=2026-11-17x"></script>
+  <script src="assets/app.js?v=2026-11-17y"></script>
 </body>
 </html>
