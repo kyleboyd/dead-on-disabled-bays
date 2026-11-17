@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dead on Disabled Bays: find disabled parking bays in Belfast</title>
+  <meta name="description" content="Find Blue Badge parking bays in Belfast on a map or in a list. Search by street, filter, or find the bays nearest to you.">
+  <meta name="theme-color" content="#093773">
+  <link rel="stylesheet" href="https://use.typekit.net/gbz5wqn.css"><!-- Roc Grotesk, Adobe Fonts web project -->
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="assets/tokens.css">
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#results">Skip to the list of bays</a>
+
+  <header class="site-header">
+    <h1 class="brand">
+      <svg class="brand-icon" aria-hidden="true" viewBox="0 0 100 100">
+        <circle cx="64" cy="13" r="10"/>
+        <path d="M58 30 44 58h30l8 30" fill="none" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M56 32 80 36" fill="none" stroke-width="10" stroke-linecap="round"/>
+        <path d="M30 50a26 26 0 1 0 38 30" fill="none" stroke-width="9" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-text"><span class="brand-top">Dead on</span> <span class="brand-bottom">Disabled Bays</span></span>
+    </h1>
+  </header>
+
+  <main>
+    <section class="map-section" aria-labelledby="map-heading">
+      <h2 id="map-heading" class="visually-hidden">Map</h2>
+      <div id="map"></div>
+      <div class="map-overlay">
+      <form id="search-form" class="search-form" role="search" novalidate>
+        <label for="search" class="visually-hidden">Search by street or place</label>
+        <div class="search-field">
+          <input type="search" id="search" name="q" autocomplete="off" spellcheck="false" placeholder="Where to?">
+          <button type="submit" class="search-go" aria-label="Search">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15.5 15.5 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <button type="button" class="near-me" id="near-me" aria-pressed="false">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8zm9 3h-2.07A7 7 0 0 0 13 5.07V3h-2v2.07A7 7 0 0 0 5.07 11H3v2h2.07A7 7 0 0 0 11 18.93V21h2v-2.07A7 7 0 0 0 18.93 13H21v-2zm-9 6a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></svg>
+            <span>Near me</span>
+          </button>
+        </div>
+      </form>
+
+      <div class="chips" role="group" aria-labelledby="chips-label">
+        <span class="chips-label visually-hidden" id="chips-label">Show only</span>
+        <button type="button" class="chip" aria-pressed="false" data-filter="kind" data-value="street">
+          <span class="chip-icon" aria-hidden="true">♿</span>
+          <span>On-street</span>
+        </button>
+        <button type="button" class="chip" aria-pressed="false" data-filter="kind" data-value="council">
+          <span class="chip-icon" aria-hidden="true">🅿️</span>
+          <span>Car parks</span>
+        </button>
+        <button type="button" class="chip" aria-pressed="false" data-filter="kind" data-value="hospital">
+          <span class="chip-icon" aria-hidden="true">🏥</span>
+          <span>Hospitals</span>
+        </button>
+        <button type="button" class="chip" aria-pressed="false" data-filter="kind" data-value="shopping">
+          <span class="chip-icon" aria-hidden="true">🛍️</span>
+          <span>Shopping</span>
+        </button>
+        <button type="button" class="chip" aria-pressed="false" data-filter="limit" data-value="unlimited">
+          <span class="chip-icon" aria-hidden="true">♾️</span>
+          <span>No time limit</span>
+        </button>
+        <button type="button" class="chip" aria-pressed="false" data-filter="q" data-value="good">
+          <span class="chip-icon" aria-hidden="true">📍</span>
+          <span>Good position</span>
+        </button>
+        <button type="button" class="chip chip-clear" id="filters-reset" hidden><span class="chip-icon" aria-hidden="true">✕</span><span>Clear filters</span></button>
+      </div>
+      </div>
+      <div id="map-message" class="feedback is-error map-message" role="status" hidden>
+        <span class="feedback-icon" aria-hidden="true"></span>
+        <div><p class="feedback-title"></p><p class="feedback-detail"></p></div>
+      </div>
+    </section>
+
+    <section class="results" id="results" aria-labelledby="results-heading" tabindex="-1">
+      <div id="near-message" class="feedback" role="status" hidden>
+        <span class="feedback-icon" aria-hidden="true"></span>
+        <div><p class="feedback-title"></p><p class="feedback-detail"></p></div>
+      </div>
+      <p class="eyebrow">Belfast</p>
+      <h2 id="results-heading">Bays and car parks</h2>
+      <p id="status" class="status" role="status">Loading bays…</p>
+      <ul class="legend" aria-label="Map key">
+        <li><span class="ico" data-ico="good"></span> On-street bay</li>
+        <li><span class="ico" data-ico="approx"></span> Approximate position</li>
+        <li><span class="ico" data-ico="council"></span> Council car park</li>
+        <li><span class="ico" data-ico="nopin"></span> In the list only, no pin</li>
+      </ul>
+      <ul id="list" class="list"></ul>
+      <button type="button" class="btn btn-secondary" id="more" hidden>Show more</button>
+      <p class="credit">Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>. <button type="button" class="link-btn" id="about-open-2">Sources and limits of this data</button></p>
+    </section>
+  </main>
+
+  <dialog id="about" aria-labelledby="about-heading">
+    <div class="dialog-head">
+      <h2 id="about-heading">About this data</h2>
+      <button type="button" class="btn btn-secondary" id="about-close">Close</button>
+    </div>
+    <div class="dialog-body">
+      <p>This site lists disabled parking bays in Belfast so Blue Badge holders can find one. It is a first version, built from public records.</p>
+
+      <h3>What to know before you rely on it</h3>
+      <ul>
+        <li><strong>Nothing has been checked on the ground.</strong> On-street bays were read automatically from legal orders. A bay in an order may have been moved, faded or never marked.</li>
+        <li><strong>Pin positions are worked out, not surveyed.</strong> Most were placed by measuring along the street from a junction, as the order describes. Bays marked “Approximate” could be further out. Bays with no pin are on the street named, but the exact spot is not known.</li>
+        <li><strong>The number of spaces is an estimate</strong> based on the bay's length, unless the order gives a count.</li>
+        <li><strong>Some bays are missing.</strong> The data covers the Parking Places (Disabled Persons' Vehicles) Order (Northern Ireland) 2016 and its amending orders up to S.R. 2026 No. 158. It leaves out 2026 Amendment Orders No. 4 and No. 5, and the Parking and Waiting Restrictions (Belfast) Order 2018, which may hold more city-centre bays.</li>
+        <li><strong>“Belfast” means what the orders label Belfast.</strong> On-street bays listed under Dunmurry, Dundonald, Newtownabbey or Holywood are not included.</li>
+        <li><strong>Council car parks:</strong> the council's dataset is undated. Where no Blue Badge count is shown, the dataset gives none; it does not mean there are no bays.</li>
+        <li><strong>Hospitals and shopping centres:</strong> counts are as published by each operator and have no map position. Supermarkets, retail parks, stations and private car parks are not covered.</li>
+      </ul>
+
+      <h3>Sources and credits</h3>
+      <ul>
+        <li>On-street bays: Northern Ireland Statutory Rules on <a href="https://www.legislation.gov.uk/nisr">legislation.gov.uk</a>, published by the Department for Infrastructure.</li>
+        <li>Council car parks: Belfast City Council open data.</li>
+        <li>Hospitals: Belfast Health and Social Care Trust car parking pages.</li>
+        <li>Shopping centres: each centre's own information and AccessAble access guides.</li>
+        <li>Positions: derived from OpenStreetMap street data. © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>.</li>
+        <li>Map: <a href="https://openfreemap.org">OpenFreeMap</a>, © <a href="https://www.openmaptiles.org/">OpenMapTiles</a>, data from OpenStreetMap. Drawn with MapLibre.</li>
+      </ul>
+
+      <h3>Your privacy</h3>
+      <p>“Find bays near me” uses your location only inside your browser to measure distances. It is not sent to this site or stored. The map images are loaded from OpenFreeMap and the map software from unpkg.com, so those services see your request as they would for any web page. “Directions” links open Google Maps with the bay's position.</p>
+      <p id="built" class="hint"></p>
+    </div>
+  </dialog>
+
+  <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

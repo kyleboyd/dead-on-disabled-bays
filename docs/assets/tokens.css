@@ -1,0 +1,39 @@
+/* Dead on Disabled Bays design tokens, v1.0.0.
+   Written out from data/tokens.json. Change values there first, then here. */
+:root {
+  /* Colour */
+  --dodb-color-access-blue: #0A58BF;     /* Primary actions and active controls */
+  --dodb-color-civic-navy: #093773;      /* Dark surfaces and strong emphasis */
+  --dodb-color-wayfinding-blue: #0468BF; /* Links, information and map routes */
+  --dodb-color-signal-yellow: #F1F20C;   /* Attention and pending states */
+  --dodb-color-quiet-grey: #F2F2F2;      /* Subtle surfaces and separators */
+  --dodb-color-ink: #111820;             /* Body text, icons and focus rings */
+  --dodb-color-white: #FFFFFF;           /* Canvas and reversed text */
+  --dodb-color-success: #167346;         /* Successful outcomes */
+  --dodb-color-error: #B42318;           /* Errors and destructive warnings */
+
+  /* Typography */
+  --dodb-font-family: Inter, "Helvetica Neue", Arial, sans-serif;
+  --dodb-font-weight-regular: 400;
+  --dodb-font-weight-semibold: 600;
+  --dodb-font-weight-bold: 700;
+  --dodb-font-size-body: 16px;      --dodb-line-height-body: 24px;
+  --dodb-font-size-small: 14px;     --dodb-line-height-small: 20px;
+  --dodb-font-size-heading2: 28px;  --dodb-line-height-heading2: 34px;
+  --dodb-font-size-heading1: 40px;  --dodb-line-height-heading1: 44px;
+  --dodb-font-size-display: 64px;   --dodb-line-height-display: 64px;
+
+  /* Spacing (4px grid) */
+  --dodb-space-1: 4px;
+  --dodb-space-2: 8px;
+  --dodb-space-3: 12px;
+  --dodb-space-4: 16px;
+  --dodb-space-6: 24px;
+  --dodb-space-8: 32px;
+  --dodb-space-12: 48px;
+  --dodb-space-16: 64px;
+
+  /* Accessibility */
+  --dodb-target-min: 44px;
+  --dodb-line-length-max: 70ch;
+}

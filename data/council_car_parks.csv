@@ -1,0 +1,31 @@
+name,address,postcode,blue_badge_bays,standard_bays,latitude,longitude,tariff,charged_hours
+Ashdale Street Car Park,Ashdale Street - Off Bloomfield Ave.,BT5 5AX,,87,54.596667,-5.890236,TL3,Mon-Sat 0800-1800
+Bankmore Street Car Park,Bankmore Street/Maryville Street,BT7 1AQ,,46,54.592300,-5.929871,TM12,Mon-Sat 0800-1800
+Charlotte Street Car Park,Ormeau Avenue,BT7 1BG,,90,54.592281,-5.926693,TM7,Mon-Sat 0800-1800
+Corporation Square Car Park,Corporation Square/Tomb Street,BT1 3AJ,,198,54.604340,-5.922644,TL4,Mon-Sat 0800-1800
+Corporation Street Car Park,Corporation Street,BT1 3DG,,124,54.605046,-5.923358,TL4,Mon-Sat 0800-1800
+Cromac Street Car Park,Cromac Street,BT2 8JN,1,99,54.593924,-5.924265,TL6,Mon-Sat 0800-1800
+Dunbar Street Car Park,Talbot Street/Dunbar Street,BT2 1LH,2,32,54.603248,-5.925944,TM10,Mon-Sat 0800-1800
+Dundela Crescent Car Park,Dundela Crescent,BT4 3BN,,26,54.600309,-5.878777,Free,Free
+Exchange Street Car Park,Exchange Street off Corporation Street,BT1 2LJ,2,46,54.600396,-5.925242,TM8,Mon-Sat 0800-1800
+Frederick Street Car Park,Frederick Street,BT1 2LW,1,134,54.605616,-5.930339,TL4,Mon-Sat 0800-1800
+Glenburn Road Car Park,"Glenburn Road, Dunmurry",BT17 9AG,3,123,54.550223,-6.005425,Free,Free
+Grampian Avenue Car Park,Grampian Avenue,BT4 3AG,1,41,54.598169,-5.886109,Free,Free
+Hope Street North Car Park,Hope Street,BT12 5EE,,41,54.593413,-5.935841,TM12,Mon-Sat 0800-2100
+Kent Street Car Park,Kent Street,BT1 2JA,2,66,54.603463,-5.933922,TM10,Mon-Sat 0800-1800
+Little Donegall Street Car Park,Little Donegall Street/Stephen Street,BT1 2JD,2,105,54.604610,-5.932752,TL6,Mon-Sat 0800-1800
+Little Victoria Street Car Park,Little Victoria Street/Bruce Street,BT2 7JH,2,84,54.592701,-5.933385,TM12,Mon-Sat 0800-2100
+Marlborough Avenue Car Park,Marlborough Avenue,BT9 7HB,2,31,54.575889,-5.955479,TL2,Mon-Sat 0800-1800
+Northumberland Street Car Park,Northumberland Street/Kendal Street,BT13 2JF,2,87,54.602989,-5.946541,Free,Free
+Parkgate Avenue Car Park,Parkgate Avenue,BT4 1JA,1,36,54.599127,-5.886814,Free,Free
+Ravenscroft Avenue Car Park,Ravenscroft Avenue,BT5 5BA,3,53,54.597197,-5.887805,Free,Free
+Sandown Road Car Park,Sandown Road,BT5 6GT,2,65,54.594108,-5.868433,Free,Free
+Shaw's Bridge Car Park,Malone Road/Shaws Bridge,BT9 5YN,4,57,54.553536,-5.954924,Free,Free
+Smithfield Car Park,Wine Tavern Street,BT1 1JQ,2,107,54.601901,-5.933594,TM12,"Mon-Sat 0800-1800, Thurs until 2100"
+Station Street Car Park,Station Street,BT5 1AS,,114,54.600366,-5.918011,TL6,Mon-Sat 0800-1800
+Wandsworth Road Car Park,Wandsworth Road,BT4 3LS,,24,54.595118,-5.854048,Free,Free
+Westminster Avenue (East) Car Park,Westminster Avenue,BT4 1QQ,,10,54.598300,-5.888232,Free,Free
+Westminster Avenue (North) Car Park,Westminster Avenue North,BT4 1QQ,,70,54.598303,-5.889029,Free,Free
+Westminster Avenue (West) Car Park,Westminster Avenue,BT4 1QQ,,10,54.598300,-5.888165,Free,Free
+Whitla Street Car Park,Whitla Street,BT15 1JP,,50,54.611024,-5.922635,Free,Free
+Lancaster Street - York Street,York Street,BT15 1AS,,53,54.606033,-5.927695,TL4,Mon-Sat 0800-1800

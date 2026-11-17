@@ -1,0 +1,11 @@
+.DS_Store
+.claude/
+
+# Geocoder working files: large, and rebuilt by data/geocode_v2.py
+data/osm_tiles/
+data/osm_belfast_streets.json
+
+# First geocoding pass, superseded by the _v2 files
+data/belfast_onstreet_bays.csv
+data/belfast_onstreet_bays_geocoded.csv
+data/belfast_onstreet_bays_current.geojson
