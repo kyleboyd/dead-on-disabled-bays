@@ -8,7 +8,7 @@ it is original work and some comes from other people's data and fonts.
 | Code | `docs/index.html`, `docs/assets/*.js`, `docs/assets/*.css`, `data/*.py`, `tools/*.py` | [MIT](LICENSE) |
 | Bay and car park data | `data/*.csv`, `data/*.geojson`, `docs/assets/places.json` | [Open Database License 1.0](https://opendatacommons.org/licenses/odbl/1-0/) (ODbL), with the source notices below |
 | Inter font | `docs/assets/fonts/` | [SIL Open Font License 1.1](docs/assets/fonts/Inter-LICENSE.txt) |
-| Brand | the name "Dead on Disabled Bays", the wordmark, `brand/`, `docs/assets/logo.png`, `data/DESIGN_SYSTEM.md`, `data/tokens.json` | All rights reserved, Kyle Boyd |
+| Brand | the name "Dead on Disabled Bays", the wordmark, `brand/`, `data/DESIGN_SYSTEM.md`, `data/tokens.json` | All rights reserved, Kyle Boyd |
 
 ## Why the data is under the ODbL
 
