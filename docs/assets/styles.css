@@ -76,7 +76,10 @@ a { color: var(--link); font-weight: 600; text-decoration-thickness: 2px; text-u
 /* Top bar: Civic Navy with the logo only. */
 .site-header { display: flex; align-items: center; justify-content: space-between; gap: var(--s4); padding: var(--s4); background: var(--navy); }
 /* Wordmark set live in Roc Grotesk Wide (Adobe Fonts) so it stays sharp and is read as text. */
-.brand { display: flex; align-items: center; gap: var(--s3); margin: 0; color: #F0F039; letter-spacing: 0; }
+.brand { margin: 0; letter-spacing: 0; }
+/* The whole brand links to the home page. */
+.brand-link { display: flex; align-items: center; gap: var(--s3); color: #F0F039; text-decoration: none; border-radius: 5px; }
+.brand-link:hover .brand-badge { background: var(--blue); }
 /* Icon in a blue box. app.js makes the box as tall as the two lines of text on wide screens. */
 .brand-badge { flex: none; display: grid; place-items: center; width: 40px; height: 40px; background: #1B5BBC; border-radius: 5px; }
 /* Filled wheelchair icon, copied from brand/disabled-icon.svg. */
@@ -110,12 +113,12 @@ dialog.info-panel::backdrop { background: rgba(9, 55, 115, .5); }
   border: 0; border-radius: 10px; background: rgba(9, 55, 115, .85); color: var(--white); cursor: pointer;
 }
 .info-close:hover { background: var(--navy); }
-/* Belfast photo with the brand wheelchair icon small in its bottom-right corner. */
+/* Belfast photo with the brand wheelchair icon in its bottom-left corner. */
 .info-photo { margin: 0; }
 .info-photo-frame { position: relative; overflow: hidden; }
 .info-photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
 .info-photo-icon {
-  position: absolute; right: var(--s3); bottom: var(--s3); width: 40px; height: 50px;
+  position: absolute; left: var(--s3); bottom: var(--s3); width: 60px; height: 75px;
   filter: drop-shadow(0 1px 3px rgba(9, 55, 115, .8));
 }
 .info-photo figcaption { padding: var(--s2) var(--s6) 0; font-size: 14px; line-height: 20px; color: #DCE6F3; }
