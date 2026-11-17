@@ -78,10 +78,11 @@ a { color: var(--link); font-weight: 600; text-decoration-thickness: 2px; text-u
 /* Wordmark set live in Roc Grotesk Wide (Adobe Fonts) so it stays sharp and is read as text. */
 .brand { display: flex; align-items: center; gap: var(--s1); margin: 0; color: #F0F039; letter-spacing: 0; }
 .brand-icon { flex: none; width: 36px; height: 46px; margin-right: 2px; fill: var(--blue); } /* traced from brand/disabled-icon.png */
-.brand-text { display: block; position: relative; }
-.brand-top, .brand-bottom { display: block; font-family: "roc-grotesk-wide", var(--font); white-space: nowrap; }
-.brand-top { font-weight: 700; font-size: 30px; line-height: 26px; text-transform: uppercase; }
-.brand-bottom { font-weight: 400; font-size: 21.6px; line-height: 22px; }
+.brand-text { display: block; }
+/* Roc Grotesk Extra Wide: Black over Light. app.js sizes "DEAD ON" so both lines are the same width. */
+.brand-top, .brand-bottom { display: block; width: max-content; font-family: "roc-grotesk-extrawide", "roc-grotesk-wide", var(--font); white-space: nowrap; }
+.brand-top { font-weight: 900; font-size: 26px; line-height: 0.9; text-transform: uppercase; }
+.brand-bottom { font-weight: 300; font-size: 15px; line-height: 20px; }
 
 /* Search and filters float over the top of the map. */
 .map-overlay {
@@ -163,7 +164,7 @@ input[type="search"]:focus-visible { outline-offset: -3px; box-shadow: none; }
 .near-me {
   flex: none; display: inline-flex; align-items: center; gap: var(--s2);
   min-height: 44px; padding: 0 var(--s4); margin-right: 2px;
-  border: 0; border-radius: 10px; background: var(--yellow); color: var(--ink);
+  border: 0; border-radius: 18px; background: var(--yellow); color: var(--ink); /* 18px inside the bar's 2px edge = the bar's 20px curve */
   font: 600 16px/20px var(--font); white-space: nowrap; cursor: pointer;
 }
 .near-me:hover { background: #E2E30A; }
@@ -294,13 +295,14 @@ dialog::backdrop { background: rgba(9, 55, 115, .7); }
 @media (min-width: 900px) and (min-height: 560px) {
   body { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
   .site-header { padding: var(--s3) var(--s6); }
-  .map-overlay { right: auto; width: min(560px, 100%); padding: var(--s4); }
+  /* As wide as the filter row, so the pills sit in one line under the search bar; wraps if the map is narrower. */
+  .map-overlay { right: auto; width: max-content; max-width: 100%; padding: var(--s4); }
   .chips { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }
   main {
     flex: 1 1 auto; min-height: 0;
     /* The list scrolls; the map stays in view beside it. */
     overflow-y: auto; container-type: size;
-    display: grid; grid-template-columns: 460px 1fr;
+    display: grid; grid-template-columns: 420px 1fr;
   }
   .results { grid-column: 1; grid-row: 1; padding: var(--s6); }
   .map-section { grid-column: 2; grid-row: 1; position: sticky; top: 0; align-self: start; height: calc(100vh - 60px); height: 100cqh; }

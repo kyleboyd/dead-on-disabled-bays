@@ -625,7 +625,21 @@
     $('about-close').addEventListener('click', function () { if (about.close) about.close(); else about.removeAttribute('open'); });
   }
 
+  // Size "DEAD ON" so it is exactly as wide as "Disabled Bays", whatever font has loaded.
+  function fitBrand() {
+    var top = document.querySelector('.brand-top'), bottom = document.querySelector('.brand-bottom');
+    if (!top || !bottom) return;
+    top.style.fontSize = '20px';
+    var ratio = bottom.getBoundingClientRect().width / top.getBoundingClientRect().width;
+    if (ratio > 0 && isFinite(ratio)) top.style.fontSize = (20 * ratio).toFixed(2) + 'px';
+  }
+
   function start() {
+    fitBrand();
+    if (document.fonts) {
+      document.fonts.ready.then(fitBrand);
+      document.fonts.addEventListener('loadingdone', fitBrand);
+    }
     wire();
     initMap();
     fetch('assets/places.json').then(function (r) {
