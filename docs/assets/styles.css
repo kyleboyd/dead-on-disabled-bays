@@ -121,15 +121,17 @@ dialog.info-panel::backdrop { background: rgba(9, 55, 115, .5); }
   position: absolute; left: var(--s3); bottom: var(--s3); width: 60px; height: 75px;
   filter: drop-shadow(0 1px 3px rgba(9, 55, 115, .8));
 }
-.info-photo figcaption { padding: var(--s2) var(--s6) 0; font-size: 14px; line-height: 20px; color: #DCE6F3; }
+.info-photo figcaption { padding: var(--s2) var(--s6) 0; font-size: 17px; line-height: 24px; color: #DCE6F3; }
 .info-photo figcaption a { color: inherit; }
-.info-inner { max-width: var(--dodb-line-length-max); padding: var(--s6) var(--s6) var(--s12); }
+.info-inner { max-width: var(--dodb-line-length-max); padding: var(--s6) var(--s6) var(--s12); container-type: inline-size; }
 /* Roc Grotesk for titles only. */
 .info-panel h2, .info-panel h3 { font-family: "roc-grotesk-extrawide", "roc-grotesk-wide", var(--font); font-weight: 800; color: #F0F039; letter-spacing: 0; }
-.info-title { font-size: 42px; line-height: 46px; } /* 50% larger than the 28px heading size */
-.info-panel h3 { margin: var(--s8) 0 var(--s2); font-size: 18px; line-height: 24px; }
-.info-lead { margin: var(--s3) 0 0; font-size: 20px; line-height: 28px; font-weight: 600; }
-.info-panel p, .info-panel li { font-size: 16px; line-height: 24px; }
+/* Panel text is set 20% larger than the rest of the site. The title is 50px where it fits, and shrinks
+   just enough that its longest word ("Disabled") never runs past the panel edge. */
+.info-title { font-size: min(50px, 12.8cqi); line-height: 1.08; }
+.info-panel h3 { margin: var(--s8) 0 var(--s2); font-size: 22px; line-height: 28px; }
+.info-lead { margin: var(--s3) 0 0; font-size: 24px; line-height: 32px; font-weight: 600; }
+.info-panel p, .info-panel li, .info-panel .link-btn { font-size: 19px; line-height: 29px; }
 .info-panel ul { margin: 0; padding-left: var(--s6); }
 .info-panel li { margin-bottom: var(--s2); }
 .info-panel a, .info-panel .link-btn { color: var(--white); }

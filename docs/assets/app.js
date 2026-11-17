@@ -719,7 +719,7 @@
     window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitBrand, 100); });
     wire();
     initMap();
-    fetch('assets/places.json?v=2026-11-17q').then(function (r) {
+    fetch('assets/places.json?v=2026-11-17r').then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     }).then(function (data) {
