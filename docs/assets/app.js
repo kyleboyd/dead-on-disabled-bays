@@ -628,6 +628,19 @@
       if (firstNew) focusItem(firstNew.id);
     });
 
+    // Map key: always open on wide screens; on phones the Key pill shows and hides it.
+    var keyToggle = $('key-toggle'), keyList = $('key-list');
+    function syncKey() {
+      if (wide.matches) { keyList.hidden = false; return; }
+      keyList.hidden = keyToggle.getAttribute('aria-expanded') !== 'true';
+    }
+    keyToggle.addEventListener('click', function () {
+      keyToggle.setAttribute('aria-expanded', String(keyToggle.getAttribute('aria-expanded') !== 'true'));
+      syncKey();
+    });
+    if (wide.addEventListener) wide.addEventListener('change', syncKey);
+    syncKey();
+
     // Project panel: slides in from the left; Close, Esc or the sources link slide it back out.
     var info = $('info');
     function openInfo() { info.classList.remove('is-closing'); if (info.showModal) info.showModal(); else info.setAttribute('open', ''); }
@@ -719,7 +732,7 @@
     window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitBrand, 100); });
     wire();
     initMap();
-    fetch('assets/places.json?v=2026-11-17w').then(function (r) {
+    fetch('assets/places.json?v=2026-11-17x').then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     }).then(function (data) {
