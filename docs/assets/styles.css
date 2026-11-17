@@ -94,30 +94,33 @@ a { color: var(--link); font-weight: 600; text-decoration-thickness: 2px; text-u
 }
 .info-open:hover { background: rgba(255, 255, 255, .14); }
 
-/* Project panel: full width, slides in from the left. */
+/* Project panel: slides in from the left. Full width on phones, a quarter of the screen on desktop. */
 dialog.info-panel {
-  width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; inset: 0;
+  width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; inset: 0 auto 0 0;
   padding: 0; border: 0; border-radius: 0; background: var(--navy); color: var(--white);
-  overflow-y: auto;
+  overflow-y: auto; box-shadow: 0 10px 30px rgba(17, 24, 32, .3);
 }
 dialog.info-panel[open] { display: block; animation: info-in .28s ease-out; }
 dialog.info-panel.is-closing { animation: info-out .22s ease-in forwards; }
 dialog.info-panel::backdrop { background: rgba(9, 55, 115, .5); }
 @keyframes info-in { from { transform: translateX(-100%); } to { transform: none; } }
 @keyframes info-out { from { transform: none; } to { transform: translateX(-100%); } }
-.info-inner {
-  display: grid; gap: var(--s8); max-width: 1200px; padding: var(--s16, 64px) var(--s6) var(--s12);
-}
-.info-text { max-width: var(--dodb-line-length-max); min-width: 0; }
-/* Illustration: under the title on phones, beside the text on wide screens. */
-.info-art { margin: 0; order: -1; max-width: 420px; }
-.info-art svg { display: block; width: 100%; height: auto; }
-.info-art-word { font-family: "roc-grotesk-extrawide", "roc-grotesk-wide", var(--font); font-weight: 800; font-size: 26px; letter-spacing: 3px; }
 .info-close {
-  position: fixed; top: var(--s4); right: var(--s4); z-index: 1; width: 44px; height: 44px; display: grid; place-items: center;
-  border: 0; border-radius: 10px; background: transparent; color: var(--white); cursor: pointer;
+  position: absolute; top: var(--s3); right: var(--s3); z-index: 2; width: 44px; height: 44px; display: grid; place-items: center;
+  border: 0; border-radius: 10px; background: rgba(9, 55, 115, .85); color: var(--white); cursor: pointer;
 }
-.info-close:hover { background: rgba(255, 255, 255, .14); }
+.info-close:hover { background: var(--navy); }
+/* Belfast photo with the dashed bay icon laid over its bottom-right corner at 45 degrees. */
+.info-photo { margin: 0; }
+.info-photo-frame { position: relative; overflow: hidden; }
+.info-photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.info-photo-icon {
+  position: absolute; right: -2%; bottom: -6%; width: 38%; height: auto; aspect-ratio: 1;
+  transform: rotate(45deg); filter: drop-shadow(0 2px 4px rgba(9, 55, 115, .6));
+}
+.info-photo figcaption { padding: var(--s2) var(--s6) 0; font-size: 14px; line-height: 20px; color: #DCE6F3; }
+.info-photo figcaption a { color: inherit; }
+.info-inner { max-width: var(--dodb-line-length-max); padding: var(--s6) var(--s6) var(--s12); }
 /* Roc Grotesk for titles only. */
 .info-panel h2, .info-panel h3 { font-family: "roc-grotesk-extrawide", "roc-grotesk-wide", var(--font); font-weight: 800; color: #F0F039; letter-spacing: 0; }
 .info-title { font-size: 42px; line-height: 46px; } /* 50% larger than the 28px heading size */
@@ -343,8 +346,8 @@ dialog::backdrop { background: rgba(9, 55, 115, .7); }
 @media (min-width: 900px) and (min-height: 560px) {
   body { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
   .site-header { padding: var(--s4) var(--s6); }
-  .info-inner { grid-template-columns: minmax(0, 1fr) minmax(320px, 480px); gap: var(--s16, 64px); align-items: start; }
-  .info-art { order: 0; max-width: none; position: sticky; top: var(--s16, 64px); }
+  /* A quarter of the screen, but never so narrow the title and text get cramped. */
+  dialog.info-panel { width: max(25%, 380px); }
   /* As wide as the filter row, so the pills sit in one line under the search bar; wraps if the map is narrower. */
   .map-overlay { right: auto; width: max-content; max-width: 100%; padding: var(--s4); }
   .chips { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1254" height="1254" viewBox="0 0 1254 1254" role="img" aria-labelledby="title">
+  <title id="title">Wheelchair accessibility symbol, dashed outline</title>
+  <!-- Same shapes as disabled-icon.svg, drawn as a dashed outline like painted road markings. -->
+  <g fill="none" stroke="#F0F039" stroke-width="16" stroke-dasharray="48 26" stroke-linecap="round" stroke-linejoin="round">
+    <ellipse cx="919" cy="164" rx="123" ry="124"/>
+    <path d="M 323,270 L 477,121 Q 510,90 550,115 L 870,307 Q 925,343 890,404 L 760,559 L 1003,558 Q 1081,558 1072,633 L 1043,997 Q 1040,1044 991,1047 Q 944,1048 906,1018 Q 892,1005 899,960 L 920,695 L 830,695 Q 873,847 844,943 Q 822,1037 752,1097 L 667,1013 Q 730,941 726,852 Q 728,741 643,673 Q 505,565 355,690 L 270,605 Q 351,526 458,507 L 625,316 L 531,260 L 414,365 Q 370,406 322,365 Q 281,326 323,270 Z"/>
+    <path d="M 245,630 L 332,716 Q 282,786 283,857 Q 280,959 349,1027 Q 417,1090 507,1086 Q 583,1086 640,1037 L 725,1122 Q 630,1210 507,1206 Q 350,1209 248,1100 Q 150,998 156,852 Q 158,725 245,630 Z"/>
+  </g>
+</svg>

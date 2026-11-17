@@ -641,6 +641,12 @@
     $('info-open').addEventListener('click', openInfo);
     $('info-close').addEventListener('click', function () { closeInfo(); });
     info.addEventListener('cancel', function (e) { e.preventDefault(); closeInfo(); });
+    // On desktop the panel is narrow, so a click on the dimmed map beside it closes it too.
+    info.addEventListener('click', function (e) {
+      if (e.target !== info) return;
+      var r = info.getBoundingClientRect();
+      if (e.clientX > r.right || e.clientX < r.left || e.clientY < r.top || e.clientY > r.bottom) closeInfo();
+    });
     $('info-sources').addEventListener('click', function () { closeInfo(openAbout); });
 
     var about = $('about');
@@ -713,7 +719,7 @@
     window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitBrand, 100); });
     wire();
     initMap();
-    fetch('assets/places.json?v=2026-11-17n').then(function (r) {
+    fetch('assets/places.json?v=2026-11-17o').then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     }).then(function (data) {
