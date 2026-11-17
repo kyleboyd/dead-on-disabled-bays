@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="https://use.typekit.net/gbz5wqn.css"><!-- Roc Grotesk, Adobe Fonts web project -->
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
   <!-- Bump ?v= on every release so browsers fetch the new files instead of cached ones. -->
-  <link rel="stylesheet" href="assets/tokens.css?v=2026-11-17z">
-  <link rel="stylesheet" href="assets/styles.css?v=2026-11-17z">
+  <link rel="stylesheet" href="assets/tokens.css?v=2026-11-18a">
+  <link rel="stylesheet" href="assets/styles.css?v=2026-11-18a">
 </head>
 <body>
   <a class="skip-link" href="#results">Skip to the list of bays</a>
@@ -126,20 +126,22 @@
       <p class="info-lead">Don’t make life harder, make it smarter.</p>
 
       <h3>Why it exists</h3>
-      <p>A side project by Dr Kyle Boyd, Lecturer of Interaction Design at the Belfast School of Art, Ulster University. Kyle lives with cerebral palsy and rocks a Blue Badge daily, so knowing where a bay really is matters.</p>
+      <p>A side project by Dr Kyle Boyd, Lecturer of Interaction Design at the Belfast School of Art, Ulster University. Kyle lives with cerebral palsy and rocks a Blue Badge daily. It started with a question: how many disabled bays are there in Belfast?</p>
 
-      <h3>What it does</h3>
+      <h3>The answer: 523</h3>
+      <p>Every on-street disabled bay is written into law. Since 2016, 609 have been created and 86 removed, leaving 523.</p>
+
+      <h3>Why 563 places, 532 on the map?</h3>
       <ul>
-        <li>Puts Belfast’s on-street disabled bays, council car parks and hospitals on one map, with a list for anyone who prefers not to use the map.</li>
-        <li>Finds the bays nearest you, in miles. Your location never leaves your device.</li>
-        <li>Filters by type, time limit and how precise the position is, and searches by street, postcode or place.</li>
+        <li>563 is the 523 bays plus 40 council car parks, hospitals and shopping centres.</li>
+        <li>31 have no pin: for 18 bays the law names the street but not the spot, 8 streets aren’t on the map, and 5 shopping centres have no published location. They’re still in the list and search.</li>
       </ul>
 
-      <h3>Where the data comes from</h3>
-      <p>Bays are read from the Parking Places (Disabled Persons’ Vehicles) Order (NI) 2016 and its amendments, with positions worked out from OpenStreetMap. Car park counts come from Belfast City Council and the Belfast Health and Social Care Trust.</p>
+      <h3>What it does</h3>
+      <p>Find the bays nearest you in miles, filter them, or search by street, postcode or place. Your location never leaves your device.</p>
 
       <h3>Please check when you arrive</h3>
-      <p>Nothing has been checked on the ground yet. A bay may have moved, faded or never been painted.</p>
+      <p>Bays come from the 2016 Disabled Persons’ Vehicles Order and its amendments, placed using OpenStreetMap. None are checked on the ground yet.</p>
 
       <h3>How it was made</h3>
       <p>Designed in Figma and built with Claude, in about 450,000 tokens of conversation to 17 November 2026. The code and data are open on <a href="https://github.com/kyleboyd/dead-on-disabled-bays">GitHub</a>.</p>
@@ -187,6 +189,6 @@
   </dialog>
 
   <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
-  <script src="assets/app.js?v=2026-11-17z"></script>
+  <script src="assets/app.js?v=2026-11-18a"></script>
 </body>
 </html>
