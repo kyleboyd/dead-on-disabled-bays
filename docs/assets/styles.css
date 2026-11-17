@@ -74,7 +74,7 @@ a { color: var(--link); font-weight: 600; text-decoration-thickness: 2px; text-u
 .skip-link:focus { top: var(--s2); }
 
 /* Top bar: Civic Navy with the logo only. */
-.site-header { padding: var(--s3) var(--s4); background: var(--navy); }
+.site-header { padding: var(--s4); background: var(--navy); }
 /* Wordmark set live in Roc Grotesk Wide (Adobe Fonts) so it stays sharp and is read as text. */
 .brand { display: flex; align-items: center; gap: var(--s3); margin: 0; color: #F0F039; letter-spacing: 0; }
 /* Icon in a blue box. app.js makes the box as tall as the two lines of text on wide screens. */
@@ -299,7 +299,7 @@ dialog::backdrop { background: rgba(9, 55, 115, .7); }
 /* Wide screens: everything in one bar, list beside the map. At 200% zoom this falls back to the single column above. */
 @media (min-width: 900px) and (min-height: 560px) {
   body { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
-  .site-header { padding: var(--s3) var(--s6); }
+  .site-header { padding: var(--s4) var(--s6); }
   /* As wide as the filter row, so the pills sit in one line under the search bar; wraps if the map is narrower. */
   .map-overlay { right: auto; width: max-content; max-width: 100%; padding: var(--s4); }
   .chips { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }
