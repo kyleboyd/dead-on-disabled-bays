@@ -7,6 +7,7 @@ Reads (and never changes) these files in data/:
   belfast_onstreet_bays_geocoded_v2.csv   on-street bays (only Status = Current is used)
   council_car_parks.csv                   Belfast City Council car parks
   hospitals_shopping.csv                  hospital and shopping centre car parks (no coordinates)
+  site_locations.csv                      map positions for some of those sites (the site, not each car park)
 """
 import csv
 import json
@@ -99,11 +100,15 @@ def council():
 
 
 def sites():
+    located = {r["site"]: r for r in rows("site_locations.csv")}
     grouped = OrderedDict()
     for r in rows("hospitals_shopping.csv"):
         grouped.setdefault(r["site"], []).append(r)
     out = []
     for i, (site, rs) in enumerate(grouped.items(), 1):
+        loc = located.get(site)
+        lat = num(loc["latitude"]) if loc else None
+        lng = num(loc["longitude"]) if loc else None
         out.append({
             "id": f"SITE-{i}",
             "kind": "hospital" if rs[0]["type"] == "Hospital" else "shopping",
@@ -117,9 +122,10 @@ def sites():
                 "address": r["address"] if r["address"] != rs[0]["address"] else "",
                 "notes": r["notes"],
             } for r in rs],
-            "q": "none",
-            "lat": None,
-            "lng": None,
+            # "site": the pin marks the hospital or centre, not each car park.
+            "q": "site" if lat is not None else "none",
+            "lat": lat,
+            "lng": lng,
         })
     return out
 

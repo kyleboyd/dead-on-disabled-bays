@@ -41,6 +41,7 @@
   var ICONS = {
     good: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="' + NAVY + '"/><circle cx="12" cy="12" r="3.5" fill="#fff"/></svg>',
     approx: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="#fff" stroke="' + NAVY + '" stroke-width="4"/></svg>',
+    hospital: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" fill="#fff" stroke="' + BLUE + '" stroke-width="2.5"/><path fill="none" stroke="' + BLUE + '" stroke-width="2.6" d="M8.5 7.5v9M15.5 7.5v9M8.5 12h7"/></svg>',
     council: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" fill="' + BLUE + '"/><path fill="#fff" d="M8.5 6.5h4.2a3.6 3.6 0 0 1 0 7.2h-1.6v3.8H8.5v-11zm2.6 2.2v2.8h1.4a1.4 1.4 0 0 0 0-2.8h-1.4z"/></svg>',
     nopin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="' + INK + '" stroke-width="2.5" d="M4 7h16M4 12h16M4 17h16"/></svg>',
     success: '<svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#167346"/><path fill="none" stroke="#fff" stroke-width="2.5" d="m9.5 16.5 4.5 4.5 8.5-9.5"/></svg>',
@@ -52,12 +53,14 @@
 
   function iconFor(p) {
     if (p.kind === 'council') return 'council';
+    if (p.kind === 'hospital' && p.q === 'site') return 'hospital';
     if (p.kind === 'street' && p.q === 'good') return 'good';
     if (p.kind === 'street' && p.q === 'approx') return 'approx';
     return 'nopin';
   }
-  function hasPin(p) { return p.lat != null && (p.q === 'good' || p.q === 'approx'); }
-  function reliability(p) { return p.q === 'good' ? 'good' : p.q === 'approx' ? 'approx' : 'nopin'; }
+  // "site" pins mark a hospital or centre, not the exact bays, so the reliability filter treats them as approximate.
+  function hasPin(p) { return p.lat != null && (p.q === 'good' || p.q === 'approx' || p.q === 'site'); }
+  function reliability(p) { return p.q === 'good' ? 'good' : (p.q === 'approx' || p.q === 'site') ? 'approx' : 'nopin'; }
 
   var ABBREV = { rd: 'road', st: 'street', ave: 'avenue', av: 'avenue', dr: 'drive', pk: 'park', gdns: 'gardens', cres: 'crescent', pl: 'place', sq: 'square', tce: 'terrace', ct: 'court' };
   function norm(s) {
@@ -138,12 +141,13 @@
     if (p.kind === 'street' && p.limited) tags.push(el('span', { class: 'tag tag-limit', html: ICONS.clock + '<span>Time limit</span>' }));
     if (p.kind === 'street' && p.q === 'approx') tags.push(el('span', { class: 'tag', html: ICONS.approx + '<span>Approximate position</span>' }));
     if (p.kind === 'street' && (p.q === 'street' || p.q === 'none')) tags.push(el('span', { class: 'tag', html: ICONS.nopin + '<span>On this street, exact spot unknown</span>' }));
-    if (p.kind === 'hospital' || p.kind === 'shopping') tags.push(el('span', { class: 'tag', html: ICONS.nopin + '<span>Not on the map</span>' }));
+    if ((p.kind === 'hospital' || p.kind === 'shopping') && p.lat == null) tags.push(el('span', { class: 'tag', html: ICONS.nopin + '<span>Not on the map</span>' }));
     return tags;
   }
 
   function positionText(p) {
     if (p.kind === 'council') return 'From Belfast City Council’s car park data.';
+    if (p.q === 'site') return 'The pin marks the hospital site from OpenStreetMap. The Blue Badge bays are in the car parks listed, which may be some way from the pin.';
     if (p.kind !== 'street') return 'This site has no map position in the data. Use the address.';
     var t;
     if (p.q === 'good') t = 'Worked out by measuring along the street from the junction. Expected within about 10 metres, but not checked on the ground.';
@@ -367,7 +371,12 @@
     c.width = c.height = size * ratio;
     var g = c.getContext('2d');
     g.scale(ratio, ratio);
-    if (kind === 'council') {
+    if (kind === 'hospital') {
+      g.fillStyle = BLUE; g.fillRect(2, 2, 24, 24);
+      g.fillStyle = '#fff'; g.fillRect(5, 5, 18, 18);
+      g.fillStyle = BLUE; g.font = '700 15px Arial, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+      g.fillText('H', 14, 15);
+    } else if (kind === 'council') {
       g.fillStyle = '#fff'; g.fillRect(2, 2, 24, 24);
       g.fillStyle = BLUE; g.fillRect(4, 4, 20, 20);
       g.fillStyle = '#fff'; g.font = '700 16px Arial, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
@@ -428,7 +437,7 @@
     });
 
     map.on('load', function () {
-      ['good', 'approx', 'council'].forEach(function (k) {
+      ['good', 'approx', 'council', 'hospital'].forEach(function (k) {
         var img = pinImage(k);
         map.addImage('pin-' + k, img.image, img.options);
       });
@@ -442,7 +451,7 @@
         layout: {
           'icon-image': ['get', 'icon'], 'icon-allow-overlap': true, 'icon-ignore-placement': true,
           'icon-size': ['interpolate', ['linear'], ['zoom'], 10, 0.55, 14, 1],
-          'symbol-sort-key': ['match', ['get', 'icon'], 'pin-council', 2, 'pin-approx', 0, 1]
+          'symbol-sort-key': ['match', ['get', 'icon'], 'pin-hospital', 3, 'pin-council', 2, 'pin-approx', 0, 1]
         }
       });
       mapReady = true;
@@ -667,7 +676,7 @@
     window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitBrand, 100); });
     wire();
     initMap();
-    fetch('assets/places.json?v=2026-11-17b').then(function (r) {
+    fetch('assets/places.json?v=2026-11-17c').then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     }).then(function (data) {
