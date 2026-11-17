@@ -83,7 +83,7 @@ a { color: var(--link); font-weight: 600; text-decoration-thickness: 2px; text-u
 /* Roc Grotesk Extra Wide: Black over Light. app.js sizes "DEAD ON" so both lines are the same width. */
 .brand-top, .brand-bottom { display: block; width: max-content; font-family: "roc-grotesk-extrawide", "roc-grotesk-wide", var(--font); white-space: nowrap; }
 .brand-top { font-weight: 800; font-size: 26px; line-height: 0.9; text-transform: uppercase; }
-.brand-bottom { font-weight: 300; font-size: 15px; line-height: 20px; }
+.brand-bottom { font-weight: 300; font-size: 15px; line-height: 1.3; }
 
 /* Search and filters float over the top of the map. */
 .map-overlay {

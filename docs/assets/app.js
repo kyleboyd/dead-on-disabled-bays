@@ -625,13 +625,36 @@
     $('about-close').addEventListener('click', function () { if (about.close) about.close(); else about.removeAttribute('open'); });
   }
 
-  // Size "DEAD ON" so it is exactly as wide as "Disabled Bays", whatever font has loaded.
+  // Brand sizing. "DEAD ON" is always exactly as wide as "Disabled Bays". On wide screens the whole
+  // brand (icon + words) is also scaled to the width of the list column below it.
   function fitBrand() {
     var top = document.querySelector('.brand-top'), bottom = document.querySelector('.brand-bottom');
-    if (!top || !bottom) return;
-    top.style.fontSize = '20px';
-    var ratio = bottom.getBoundingClientRect().width / top.getBoundingClientRect().width;
-    if (ratio > 0 && isFinite(ratio)) top.style.fontSize = (20 * ratio).toFixed(2) + 'px';
+    var icon = document.querySelector('.brand-icon'), text = document.querySelector('.brand-text');
+    var results = $('results');
+    if (!top || !bottom || !icon || !text) return;
+    function matchTop() {
+      top.style.fontSize = '20px';
+      var ratio = bottom.getBoundingClientRect().width / top.getBoundingClientRect().width;
+      if (ratio > 0 && isFinite(ratio)) top.style.fontSize = (20 * ratio).toFixed(2) + 'px';
+    }
+    bottom.style.fontSize = ''; icon.style.width = ''; icon.style.height = '';
+    matchTop();
+    if (!wide.matches || !results) return;
+    var cs = getComputedStyle(results);
+    var target = results.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    var gap = parseFloat(getComputedStyle(icon).marginRight) + parseFloat(getComputedStyle(icon.parentNode).columnGap || 0);
+    // Icon height follows the text height, which follows the font size, so settle it in a few passes.
+    for (var i = 0; i < 4; i++) {
+      var size = parseFloat(getComputedStyle(bottom).fontSize);
+      var room = target - icon.getBoundingClientRect().width - gap;
+      bottom.style.fontSize = (size * room / bottom.getBoundingClientRect().width).toFixed(2) + 'px';
+      matchTop();
+      var h = text.getBoundingClientRect().height;
+      icon.style.height = h.toFixed(1) + 'px';
+      icon.style.width = (h * 1000 / 1255).toFixed(1) + 'px';
+    }
+    // The header height may have changed, so let the map fill its new space.
+    if (map) map.resize();
   }
 
   function start() {
@@ -640,9 +663,11 @@
       document.fonts.ready.then(fitBrand);
       document.fonts.addEventListener('loadingdone', fitBrand);
     }
+    var resizeTimer = null;
+    window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitBrand, 100); });
     wire();
     initMap();
-    fetch('assets/places.json').then(function (r) {
+    fetch('assets/places.json?v=2026-11-17b').then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     }).then(function (data) {
