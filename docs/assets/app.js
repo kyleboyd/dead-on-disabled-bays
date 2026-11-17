@@ -628,6 +628,21 @@
       if (firstNew) focusItem(firstNew.id);
     });
 
+    // Project panel: slides in from the left; Close, Esc or the sources link slide it back out.
+    var info = $('info');
+    function openInfo() { info.classList.remove('is-closing'); if (info.showModal) info.showModal(); else info.setAttribute('open', ''); }
+    function closeInfo(then) {
+      if (!info.open) { if (then) then(); return; }
+      var done = function () { info.classList.remove('is-closing'); if (info.close) info.close(); else info.removeAttribute('open'); if (then) then(); };
+      if (reduceMotion.matches) { done(); return; }
+      info.classList.add('is-closing');
+      setTimeout(done, 220);
+    }
+    $('info-open').addEventListener('click', openInfo);
+    $('info-close').addEventListener('click', function () { closeInfo(); });
+    info.addEventListener('cancel', function (e) { e.preventDefault(); closeInfo(); });
+    $('info-sources').addEventListener('click', function () { closeInfo(openAbout); });
+
     var about = $('about');
     function openAbout() { if (about.showModal) about.showModal(); else about.setAttribute('open', ''); }
     $('about-open-2').addEventListener('click', openAbout);
@@ -698,7 +713,7 @@
     window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitBrand, 100); });
     wire();
     initMap();
-    fetch('assets/places.json?v=2026-11-17l').then(function (r) {
+    fetch('assets/places.json?v=2026-11-17m').then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     }).then(function (data) {

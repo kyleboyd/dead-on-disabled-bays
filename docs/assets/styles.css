@@ -74,7 +74,7 @@ a { color: var(--link); font-weight: 600; text-decoration-thickness: 2px; text-u
 .skip-link:focus { top: var(--s2); }
 
 /* Top bar: Civic Navy with the logo only. */
-.site-header { padding: var(--s4); background: var(--navy); }
+.site-header { display: flex; align-items: center; justify-content: space-between; gap: var(--s4); padding: var(--s4); background: var(--navy); }
 /* Wordmark set live in Roc Grotesk Wide (Adobe Fonts) so it stays sharp and is read as text. */
 .brand { display: flex; align-items: center; gap: var(--s3); margin: 0; color: #F0F039; letter-spacing: 0; }
 /* Icon in a blue box. app.js makes the box as tall as the two lines of text on wide screens. */
@@ -86,6 +86,42 @@ a { color: var(--link); font-weight: 600; text-decoration-thickness: 2px; text-u
 .brand-top, .brand-bottom { display: block; width: max-content; font-family: "roc-grotesk-extrawide", "roc-grotesk-wide", var(--font); white-space: nowrap; }
 .brand-top { font-weight: 800; font-size: 26px; line-height: 0.8; text-transform: uppercase; }
 .brand-bottom { font-weight: 300; font-size: 14px; /* 14px is the design system minimum */ line-height: 1.05; }
+
+/* Information button, right of the top bar. */
+.info-open {
+  flex: none; width: 44px; height: 44px; display: grid; place-items: center;
+  border: 0; border-radius: 10px; background: transparent; color: var(--white); cursor: pointer;
+}
+.info-open:hover { background: rgba(255, 255, 255, .14); }
+
+/* Project panel: full width, slides in from the left. */
+dialog.info-panel {
+  width: 100%; max-width: none; height: 100%; max-height: none; margin: 0; inset: 0;
+  padding: 0; border: 0; border-radius: 0; background: var(--navy); color: var(--white);
+  overflow-y: auto;
+}
+dialog.info-panel[open] { display: block; animation: info-in .28s ease-out; }
+dialog.info-panel.is-closing { animation: info-out .22s ease-in forwards; }
+dialog.info-panel::backdrop { background: rgba(9, 55, 115, .5); }
+@keyframes info-in { from { transform: translateX(-100%); } to { transform: none; } }
+@keyframes info-out { from { transform: none; } to { transform: translateX(-100%); } }
+.info-inner { position: relative; max-width: var(--dodb-line-length-max); padding: var(--s16, 64px) var(--s6) var(--s12); }
+.info-close {
+  position: fixed; top: var(--s4); right: var(--s4); z-index: 1; width: 44px; height: 44px; display: grid; place-items: center;
+  border: 0; border-radius: 10px; background: transparent; color: var(--white); cursor: pointer;
+}
+.info-close:hover { background: rgba(255, 255, 255, .14); }
+/* Roc Grotesk for titles only. */
+.info-panel h2, .info-panel h3 { font-family: "roc-grotesk-extrawide", "roc-grotesk-wide", var(--font); font-weight: 800; color: #F0F039; letter-spacing: 0; }
+.info-title { font-size: 28px; line-height: 34px; }
+.info-panel h3 { margin: var(--s8) 0 var(--s2); font-size: 18px; line-height: 24px; }
+.info-lead { margin: var(--s3) 0 0; font-size: 20px; line-height: 28px; font-weight: 600; }
+.info-panel p, .info-panel li { font-size: 16px; line-height: 24px; }
+.info-panel ul { margin: 0; padding-left: var(--s6); }
+.info-panel li { margin-bottom: var(--s2); }
+.info-panel a, .info-panel .link-btn { color: var(--white); }
+.info-panel :focus-visible { outline-color: #F0F039; }
+.info-sources { margin-top: var(--s6); }
 
 /* Search and filters float over the top of the map. */
 .map-overlay {
@@ -315,5 +351,6 @@ dialog::backdrop { background: rgba(9, 55, 115, .7); }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  dialog.info-panel[open], dialog.info-panel.is-closing { animation: none; }
   *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }
