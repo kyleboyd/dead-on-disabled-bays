@@ -77,7 +77,7 @@ a { color: var(--link); font-weight: 600; text-decoration-thickness: 2px; text-u
 .site-header { padding: var(--s3) var(--s4); background: var(--navy); }
 /* Wordmark set live in Roc Grotesk Wide (Adobe Fonts) so it stays sharp and is read as text. */
 .brand { display: flex; align-items: center; gap: var(--s1); margin: 0; color: #F0F039; letter-spacing: 0; }
-.brand-icon { flex: none; width: 46px; height: 46px; margin-right: -6px; fill: var(--blue); stroke: var(--blue); }
+.brand-icon { flex: none; width: 36px; height: 46px; margin-right: 2px; fill: var(--blue); } /* traced from brand/disabled-icon.png */
 .brand-text { display: block; position: relative; }
 .brand-top, .brand-bottom { display: block; font-family: "roc-grotesk-wide", var(--font); white-space: nowrap; }
 .brand-top { font-weight: 700; font-size: 30px; line-height: 26px; text-transform: uppercase; }
