@@ -105,7 +105,14 @@ dialog.info-panel.is-closing { animation: info-out .22s ease-in forwards; }
 dialog.info-panel::backdrop { background: rgba(9, 55, 115, .5); }
 @keyframes info-in { from { transform: translateX(-100%); } to { transform: none; } }
 @keyframes info-out { from { transform: none; } to { transform: translateX(-100%); } }
-.info-inner { position: relative; max-width: var(--dodb-line-length-max); padding: var(--s16, 64px) var(--s6) var(--s12); }
+.info-inner {
+  display: grid; gap: var(--s8); max-width: 1200px; padding: var(--s16, 64px) var(--s6) var(--s12);
+}
+.info-text { max-width: var(--dodb-line-length-max); min-width: 0; }
+/* Illustration: under the title on phones, beside the text on wide screens. */
+.info-art { margin: 0; order: -1; max-width: 420px; }
+.info-art svg { display: block; width: 100%; height: auto; }
+.info-art-word { font-family: "roc-grotesk-extrawide", "roc-grotesk-wide", var(--font); font-weight: 800; font-size: 26px; letter-spacing: 3px; }
 .info-close {
   position: fixed; top: var(--s4); right: var(--s4); z-index: 1; width: 44px; height: 44px; display: grid; place-items: center;
   border: 0; border-radius: 10px; background: transparent; color: var(--white); cursor: pointer;
@@ -113,7 +120,7 @@ dialog.info-panel::backdrop { background: rgba(9, 55, 115, .5); }
 .info-close:hover { background: rgba(255, 255, 255, .14); }
 /* Roc Grotesk for titles only. */
 .info-panel h2, .info-panel h3 { font-family: "roc-grotesk-extrawide", "roc-grotesk-wide", var(--font); font-weight: 800; color: #F0F039; letter-spacing: 0; }
-.info-title { font-size: 28px; line-height: 34px; }
+.info-title { font-size: 42px; line-height: 46px; } /* 50% larger than the 28px heading size */
 .info-panel h3 { margin: var(--s8) 0 var(--s2); font-size: 18px; line-height: 24px; }
 .info-lead { margin: var(--s3) 0 0; font-size: 20px; line-height: 28px; font-weight: 600; }
 .info-panel p, .info-panel li { font-size: 16px; line-height: 24px; }
@@ -336,6 +343,8 @@ dialog::backdrop { background: rgba(9, 55, 115, .7); }
 @media (min-width: 900px) and (min-height: 560px) {
   body { height: 100vh; height: 100dvh; display: flex; flex-direction: column; overflow: hidden; }
   .site-header { padding: var(--s4) var(--s6); }
+  .info-inner { grid-template-columns: minmax(0, 1fr) minmax(320px, 480px); gap: var(--s16, 64px); align-items: start; }
+  .info-art { order: 0; max-width: none; position: sticky; top: var(--s16, 64px); }
   /* As wide as the filter row, so the pills sit in one line under the search bar; wraps if the map is narrower. */
   .map-overlay { right: auto; width: max-content; max-width: 100%; padding: var(--s4); }
   .chips { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }
