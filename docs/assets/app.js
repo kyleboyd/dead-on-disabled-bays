@@ -635,7 +635,7 @@
   }
 
   // Brand sizing. "DEAD ON" is always exactly as wide as "Disabled Bays". On wide screens the whole
-  // brand (icon + words) is also scaled to the width of the list column below it.
+  // brand (icon + words) is scaled to 80% of the width of the list column below it.
   function fitBrand() {
     var top = document.querySelector('.brand-top'), bottom = document.querySelector('.brand-bottom');
     var icon = document.querySelector('.brand-badge'), text = document.querySelector('.brand-text');
@@ -650,7 +650,7 @@
     matchTop();
     if (!wide.matches || !results) return;
     var cs = getComputedStyle(results);
-    var target = results.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    var target = 0.8 * (results.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight));
     var gap = parseFloat(getComputedStyle(icon.parentNode).columnGap) || 0;
     // Icon height follows the text height, which follows the font size, so settle it in a few passes.
     for (var i = 0; i < 4; i++) {
@@ -676,7 +676,7 @@
     window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitBrand, 100); });
     wire();
     initMap();
-    fetch('assets/places.json?v=2026-11-17h').then(function (r) {
+    fetch('assets/places.json?v=2026-11-17i').then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     }).then(function (data) {
