@@ -118,7 +118,7 @@ dialog.info-panel::backdrop { background: rgba(9, 55, 115, .5); }
 .info-photo-frame { position: relative; overflow: hidden; }
 .info-photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
 .info-photo-icon {
-  position: absolute; left: var(--s3); bottom: var(--s3); width: 60px; height: 75px;
+  position: absolute; left: var(--s6); bottom: var(--s3); width: 60px; height: 75px; /* same 24px inset as the title below */
   filter: drop-shadow(0 1px 3px rgba(9, 55, 115, .8));
 }
 .info-photo figcaption { padding: var(--s2) var(--s6) 0; font-size: 17px; line-height: 24px; color: #DCE6F3; }
