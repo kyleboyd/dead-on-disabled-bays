@@ -646,9 +646,33 @@
       var ratio = bottom.getBoundingClientRect().width / top.getBoundingClientRect().width;
       if (ratio > 0 && isFinite(ratio)) top.style.fontSize = (20 * ratio).toFixed(2) + 'px';
     }
-    bottom.style.fontSize = ''; icon.style.width = ''; icon.style.height = '';
+    // Where the letters actually sit: top of the capitals in "DEAD ON" to the baseline of "Disabled Bays".
+    var ctx = document.createElement('canvas').getContext('2d');
+    function ink() {
+      var tr = top.getBoundingClientRect(), br = bottom.getBoundingClientRect(), xr = text.getBoundingClientRect();
+      function line(elm, rect, str) {
+        var cs = getComputedStyle(elm);
+        ctx.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily;
+        var m = ctx.measureText(str);
+        var baseline = rect.top + (rect.height - (m.fontBoundingBoxAscent + m.fontBoundingBoxDescent)) / 2 + m.fontBoundingBoxAscent;
+        return { baseline: baseline, capTop: baseline - m.actualBoundingBoxAscent };
+      }
+      var a = line(top, tr, 'DEAD ON'), b = line(bottom, br, 'Disabled Bays');
+      return { centre: (a.capTop + b.baseline) / 2 };
+    }
+    // Centre the lettering (capitals to baseline, ignoring the space below the letters) on the blue box,
+    // which moves the words down slightly. On wide screens the box is as tall as the two lines.
+    function alignBox() {
+      text.style.transform = '';
+      if (wide.matches) icon.style.height = icon.style.width = text.getBoundingClientRect().height.toFixed(1) + 'px';
+      var r = icon.getBoundingClientRect(), k = ink();
+      var shift = (r.top + r.height / 2) - k.centre;
+      if (isFinite(shift)) text.style.transform = 'translateY(' + shift.toFixed(1) + 'px)';
+    }
+    bottom.style.fontSize = ''; icon.style.width = ''; icon.style.height = ''; text.style.transform = '';
     matchTop();
-    if (!wide.matches || !results) return;
+    alignBox();
+    if (!wide.matches || !results) { if (map) map.resize(); return; }
     var cs = getComputedStyle(results);
     var target = 0.8 * (results.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight));
     var gap = parseFloat(getComputedStyle(icon.parentNode).columnGap) || 0;
@@ -658,9 +682,7 @@
       var room = target - icon.getBoundingClientRect().width - gap;
       bottom.style.fontSize = (size * room / bottom.getBoundingClientRect().width).toFixed(2) + 'px';
       matchTop();
-      var h = text.getBoundingClientRect().height;
-      icon.style.height = h.toFixed(1) + 'px';
-      icon.style.width = h.toFixed(1) + 'px'; // the box is square
+      alignBox();
     }
     // The header height may have changed, so let the map fill its new space.
     if (map) map.resize();
@@ -676,7 +698,7 @@
     window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitBrand, 100); });
     wire();
     initMap();
-    fetch('assets/places.json?v=2026-11-17j').then(function (r) {
+    fetch('assets/places.json?v=2026-11-17l').then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     }).then(function (data) {
