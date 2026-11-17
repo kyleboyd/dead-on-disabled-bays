@@ -113,7 +113,7 @@ dialog.info-panel::backdrop { background: rgba(9, 55, 115, .5); }
   border: 0; border-radius: 10px; background: rgba(9, 55, 115, .85); color: var(--white); cursor: pointer;
 }
 .info-close:hover { background: var(--navy); }
-/* Belfast photo with the brand wheelchair icon in its bottom-left corner. */
+/* Panel photo with the brand wheelchair icon in its bottom-left corner. */
 .info-photo { margin: 0; }
 .info-photo-frame { position: relative; overflow: hidden; }
 .info-photo img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }

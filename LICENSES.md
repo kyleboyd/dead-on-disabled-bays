@@ -8,7 +8,7 @@ it is original work and some comes from other people's data and fonts.
 | Code | `docs/index.html`, `docs/assets/*.js`, `docs/assets/*.css`, `data/*.py`, `tools/*.py` | [MIT](LICENSE) |
 | Bay and car park data | `data/*.csv`, `data/*.geojson`, `docs/assets/places.json` | [Open Database License 1.0](https://opendatacommons.org/licenses/odbl/1-0/) (ODbL), with the source notices below |
 | Inter font | `docs/assets/fonts/` | [SIL Open Font License 1.1](docs/assets/fonts/Inter-LICENSE.txt) |
-| Belfast photo | `docs/assets/belfast-lagan.jpg` | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/), Florent Abel ([source](https://commons.wikimedia.org/wiki/File:Lagan_Weir_Footbridge,_Custom_House,_Albert_Memorial_Clock,_River_Lagan,_Belfast.jpg)), resized |
+| Panel photo | `docs/assets/hw-cranes.jpg` | [CC BY-NC-SA 2.0](https://creativecommons.org/licenses/by-nc-sa/2.0/), “H&W Gantry cranes in Belfast” by IHNIWIMD ([source](https://www.flickr.com/photos/ihniwimd/12056827616)), cropped on screen. Non-commercial use only, unlike the code |
 | Brand | the name "Dead on Disabled Bays", the wordmark, `brand/`, `data/DESIGN_SYSTEM.md`, `data/tokens.json` | All rights reserved, Kyle Boyd |
 
 ## Why the data is under the ODbL
