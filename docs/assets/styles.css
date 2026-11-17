@@ -356,6 +356,8 @@ dialog::backdrop { background: rgba(9, 55, 115, .7); }
   /* The search bar is 25% wider than the filter row (about 990px), or the map's width if that is narrower. */
   .map-overlay { right: auto; width: 1022px; max-width: 100%; padding: var(--s4); }
   .chips { flex-wrap: wrap; overflow: visible; margin: 0; padding: 0; }
+  /* Pills stretch to share the row, so the row is exactly as wide as the search bar. */
+  .chip { flex: 1 1 auto; justify-content: center; }
   main {
     flex: 1 1 auto; min-height: 0;
     /* The list scrolls; the map stays in view beside it. */
