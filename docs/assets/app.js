@@ -41,6 +41,8 @@
   var ICONS = {
     good: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="' + NAVY + '"/><circle cx="12" cy="12" r="3.5" fill="#fff"/></svg>',
     approx: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="#fff" stroke="' + NAVY + '" stroke-width="4"/></svg>',
+    street: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="#fff" fill-opacity=".85" stroke="' + NAVY + '" stroke-width="2.5" stroke-dasharray="3.2 2.6"/></svg>',
+    shopping: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" fill="#fff" stroke="' + BLUE + '" stroke-width="2.5"/><path fill="none" stroke="' + BLUE + '" stroke-width="2" stroke-linejoin="round" d="M7.5 10h9l-.8 7.5h-7.4z"/><path fill="none" stroke="' + BLUE + '" stroke-width="2" d="M9.8 10V9a2.2 2.2 0 0 1 4.4 0v1"/></svg>',
     hospital: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" fill="#fff" stroke="' + BLUE + '" stroke-width="2.5"/><path fill="none" stroke="' + BLUE + '" stroke-width="2.6" d="M8.5 7.5v9M15.5 7.5v9M8.5 12h7"/></svg>',
     council: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" fill="' + BLUE + '"/><path fill="#fff" d="M8.5 6.5h4.2a3.6 3.6 0 0 1 0 7.2h-1.6v3.8H8.5v-11zm2.6 2.2v2.8h1.4a1.4 1.4 0 0 0 0-2.8h-1.4z"/></svg>',
     nopin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="' + INK + '" stroke-width="2.5" d="M4 7h16M4 12h16M4 17h16"/></svg>',
@@ -54,13 +56,16 @@
   function iconFor(p) {
     if (p.kind === 'council') return 'council';
     if (p.kind === 'hospital' && p.q === 'site') return 'hospital';
+    if (p.kind === 'shopping' && p.q === 'site') return 'shopping';
+    if (p.kind === 'street' && p.q === 'street') return 'street';
     if (p.kind === 'street' && p.q === 'good') return 'good';
     if (p.kind === 'street' && p.q === 'approx') return 'approx';
     return 'nopin';
   }
-  // "site" pins mark a hospital or centre, not the exact bays, so the reliability filter treats them as approximate.
-  function hasPin(p) { return p.lat != null && (p.q === 'good' || p.q === 'approx' || p.q === 'site'); }
-  function reliability(p) { return p.q === 'good' ? 'good' : (p.q === 'approx' || p.q === 'site') ? 'approx' : 'nopin'; }
+  // Every place with a position gets a pin. "site" pins mark a hospital or centre and "street" pins mark only the
+  // street, so the "Good position" filter leaves both out.
+  function hasPin(p) { return p.lat != null && p.q !== 'none'; }
+  function reliability(p) { return p.q === 'good' ? 'good' : p.q === 'none' ? 'nopin' : 'approx'; }
 
   var ABBREV = { rd: 'road', st: 'street', ave: 'avenue', av: 'avenue', dr: 'drive', pk: 'park', gdns: 'gardens', cres: 'crescent', pl: 'place', sq: 'square', tce: 'terrace', ct: 'court' };
   function norm(s) {
@@ -140,7 +145,8 @@
     var tags = [];
     if (p.kind === 'street' && p.limited) tags.push(el('span', { class: 'tag tag-limit', html: ICONS.clock + '<span>Time limit</span>' }));
     if (p.kind === 'street' && p.q === 'approx') tags.push(el('span', { class: 'tag', html: ICONS.approx + '<span>Approximate position</span>' }));
-    if (p.kind === 'street' && (p.q === 'street' || p.q === 'none')) tags.push(el('span', { class: 'tag', html: ICONS.nopin + '<span>On this street, exact spot unknown</span>' }));
+    if (p.kind === 'street' && p.q === 'street') tags.push(el('span', { class: 'tag', html: ICONS.street + '<span>Somewhere on this street</span>' }));
+    if (p.kind === 'street' && p.q === 'none') tags.push(el('span', { class: 'tag', html: ICONS.nopin + '<span>Not on the map</span>' }));
     if ((p.kind === 'hospital' || p.kind === 'shopping') && p.lat == null) tags.push(el('span', { class: 'tag', html: ICONS.nopin + '<span>Not on the map</span>' }));
     return tags;
   }
@@ -152,7 +158,7 @@
     var t;
     if (p.q === 'good') t = 'Worked out by measuring along the street from the junction. Expected within about 10 metres, but not checked on the ground.';
     else if (p.q === 'approx') t = 'Approximate. The junction was found but the description could not be followed exactly, so the bay may be some way from the pin.';
-    else if (p.q === 'street') t = 'No pin. The bay is on this street but the exact spot is not known. Distances are measured to the middle of the street and can be hundreds of metres out.';
+    else if (p.q === 'street') t = 'The pin only marks the street. The bay is somewhere on it, and could be hundreds of metres from the pin.';
     else t = 'No pin. This street could not be found in the map data.';
     if (p.qNote) t += ' Detail: ' + p.qNote + '.';
     return t;
@@ -296,7 +302,7 @@
         ? 'Nothing matches “' + state.query + '”. Check the spelling, try the street name on its own, or clear the filters.'
         : 'No places match these filters together. Clear one to see more.';
     } else {
-      t = plural(n, 'place', 'places') + (state.query ? ' for “' + state.query + '”' : '') + ', ' + pins + ' on the map. ';
+      t = plural(n, 'place', 'places') + (state.query ? ' for “' + state.query + '”' : '') + (pins === n ? ' on the map. ' : ', ' + pins + ' on the map. ');
       t += state.here ? 'Nearest first.' : 'Sorted by name.';
     }
     $('status').textContent = t;
@@ -371,7 +377,16 @@
     c.width = c.height = size * ratio;
     var g = c.getContext('2d');
     g.scale(ratio, ratio);
-    if (kind === 'hospital') {
+    if (kind === 'street') {
+      g.beginPath(); g.arc(14, 14, 9, 0, Math.PI * 2); g.fillStyle = 'rgba(255,255,255,.85)'; g.fill();
+      g.setLineDash([3.4, 2.8]); g.lineWidth = 2.6; g.strokeStyle = NAVY; g.stroke(); g.setLineDash([]);
+    } else if (kind === 'shopping') {
+      g.fillStyle = BLUE; g.fillRect(2, 2, 24, 24);
+      g.fillStyle = '#fff'; g.fillRect(5, 5, 18, 18);
+      g.strokeStyle = BLUE; g.lineWidth = 2; g.lineJoin = 'round';
+      g.beginPath(); g.moveTo(9, 12); g.lineTo(19, 12); g.lineTo(18.2, 20); g.lineTo(9.8, 20); g.closePath(); g.stroke();
+      g.beginPath(); g.arc(14, 11.5, 2.6, Math.PI, 0); g.stroke();
+    } else if (kind === 'hospital') {
       g.fillStyle = BLUE; g.fillRect(2, 2, 24, 24);
       g.fillStyle = '#fff'; g.fillRect(5, 5, 18, 18);
       g.fillStyle = BLUE; g.font = '700 15px Arial, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
@@ -437,7 +452,7 @@
     });
 
     map.on('load', function () {
-      ['good', 'approx', 'council', 'hospital'].forEach(function (k) {
+      ['good', 'approx', 'street', 'council', 'hospital', 'shopping'].forEach(function (k) {
         var img = pinImage(k);
         map.addImage('pin-' + k, img.image, img.options);
       });
@@ -451,7 +466,7 @@
         layout: {
           'icon-image': ['get', 'icon'], 'icon-allow-overlap': true, 'icon-ignore-placement': true,
           'icon-size': ['interpolate', ['linear'], ['zoom'], 10, 0.55, 14, 1],
-          'symbol-sort-key': ['match', ['get', 'icon'], 'pin-hospital', 3, 'pin-council', 2, 'pin-approx', 0, 1]
+          'symbol-sort-key': ['match', ['get', 'icon'], 'pin-hospital', 3, 'pin-shopping', 3, 'pin-council', 2, 'pin-approx', 0, 'pin-street', -1, 1]
         }
       });
       mapReady = true;
@@ -732,7 +747,7 @@
     window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(fitBrand, 100); });
     wire();
     initMap();
-    fetch('assets/places.json?v=2026-11-18a').then(function (r) {
+    fetch('assets/places.json?v=2026-11-18b').then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     }).then(function (data) {

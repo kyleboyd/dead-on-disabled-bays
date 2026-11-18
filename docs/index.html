@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="https://use.typekit.net/gbz5wqn.css"><!-- Roc Grotesk, Adobe Fonts web project -->
   <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
   <!-- Bump ?v= on every release so browsers fetch the new files instead of cached ones. -->
-  <link rel="stylesheet" href="assets/tokens.css?v=2026-11-18a">
-  <link rel="stylesheet" href="assets/styles.css?v=2026-11-18a">
+  <link rel="stylesheet" href="assets/tokens.css?v=2026-11-18b">
+  <link rel="stylesheet" href="assets/styles.css?v=2026-11-18b">
 </head>
 <body>
   <a class="skip-link" href="#results">Skip to the list of bays</a>
@@ -44,8 +44,10 @@
           <ul class="key-items">
             <li><span class="ico" data-ico="good"></span> On-street bay</li>
             <li><span class="ico" data-ico="approx"></span> Approx. position</li>
+            <li><span class="ico" data-ico="street"></span> Somewhere on this street</li>
             <li><span class="ico" data-ico="council"></span> Council car park</li>
             <li><span class="ico" data-ico="hospital"></span> Hospital</li>
+            <li><span class="ico" data-ico="shopping"></span> Shopping centre</li>
           </ul>
         </div>
       </div>
@@ -131,10 +133,10 @@
       <h3>The answer: 523</h3>
       <p>Every on-street disabled bay is written into law. Since 2016, 609 have been created and 86 removed, leaving 523.</p>
 
-      <h3>Why 563 places, 532 on the map?</h3>
+      <h3>Why 563 places?</h3>
       <ul>
-        <li>563 is the 523 bays plus 40 council car parks, hospitals and shopping centres.</li>
-        <li>31 have no pin: for 18 bays the law names the street but not the spot, 8 streets aren’t on the map, and 5 shopping centres have no published location. They’re still in the list and search.</li>
+        <li>The 523 bays plus 40 council car parks, hospitals and shopping centres, all on the map.</li>
+        <li>For 26 bays the law names the street but not the exact spot, so their dashed pins mark the street only.</li>
       </ul>
 
       <h3>What it does</h3>
@@ -189,6 +191,6 @@
   </dialog>
 
   <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
-  <script src="assets/app.js?v=2026-11-18a"></script>
+  <script src="assets/app.js?v=2026-11-18b"></script>
 </body>
 </html>

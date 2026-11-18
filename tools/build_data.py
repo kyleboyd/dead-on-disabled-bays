@@ -7,7 +7,8 @@ Reads (and never changes) these files in data/:
   belfast_onstreet_bays_geocoded_v2.csv   on-street bays (only Status = Current is used)
   council_car_parks.csv                   Belfast City Council car parks
   hospitals_shopping.csv                  hospital and shopping centre car parks (no coordinates)
-  site_locations.csv                      map positions for some of those sites (the site, not each car park)
+  site_locations.csv                      map positions for the hospital and shopping sites (the site, not each car park)
+  street_fallbacks.csv                    street-level positions for bays whose street the geocoder could not find
 """
 import csv
 import json
@@ -49,14 +50,19 @@ def whole(text):
 
 
 def street_bays():
+    fallback = {r["street"]: r for r in rows("street_fallbacks.csv")}
     out = []
     for r in rows("belfast_onstreet_bays_geocoded_v2.csv"):
         if r["Status"] != "Current":
             continue
         q = QUALITY[r["Geocode quality"]]
         lat, lng = num(r["Latitude"]), num(r["Longitude"])
+        note = r["Geocode note"]
         if lat is None or lng is None:
             q, lat, lng = "none", None, None
+            fb = fallback.get(r["Street"])
+            if fb:  # street-level only: somewhere on (or next to) this street
+                q, lat, lng, note = "street", num(fb["latitude"]), num(fb["longitude"]), fb["how"]
         out.append({
             "id": r["ID"],
             "kind": "street",
@@ -73,7 +79,7 @@ def street_bays():
             "notes": r["Notes"],
             "q": q,
             "qRaw": r["Geocode quality"],
-            "qNote": r["Geocode note"],
+            "qNote": note,
             "lat": lat,
             "lng": lng,
         })
